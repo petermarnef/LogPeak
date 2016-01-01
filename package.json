@@ -1,0 +1,12 @@
+{
+  "name": "LogPeak",
+  "version": "0.0.0",
+  "description": "LogPeak",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.0"
+  }
+}
