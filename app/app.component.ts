@@ -11,6 +11,7 @@ import {Component, View} from 'angular2/core';
 
 export class AppComponent {
     fileContents: string;
+    updateCounter: number = 0;
     
     constructor() {
         this.updateFileContents("No file read.");
@@ -25,14 +26,27 @@ export class AppComponent {
     }
 
     updateFileContents(fileContents) {
-        console.debug(fileContents);
+        this.updateCounter++;
+        console.debug(this.updateCounter + ': ' + fileContents);
         this.fileContents = fileContents;
     }
     
     readFile(filePath: string): void {
         this.updateFileContents('Reading ...');
-        this.updateFileContents(fs.readFileSync(filePath, 'utf8'));
-
+        
+        //Read line per line
+        var lineReader = require('readline').createInterface({
+            input: fs.createReadStream(filePath)
+        });
+        
+        lineReader.on('line', (line) => {
+            this.updateFileContents(line);
+        })
+        
+        //Read entire file sync
+        // this.updateFileContents(fs.readFileSync(filePath, 'utf8'));
+        
+        //Read entire file async
         // fs.readFile(filePath, 'utf8', (err, data) => {
         //     if (data && !err) {
         //         console.debug('data read ok');
